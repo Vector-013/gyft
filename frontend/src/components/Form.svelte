@@ -7,6 +7,27 @@
 
   export let securityQuestion: string | null;
   export let formData: FormData;
+
+  const isValidRollNo = () => {
+    if (formData.rollNo)
+      return /^(1[89]|[2-9]\d)[A-Z]{2}\d{5}$/.test(formData.rollNo);
+    // Need Better roll no checker
+    else return false;
+  };
+
+  let isValidRoll = true;
+  const handleSubmit = () => {
+    isValidRoll = isValidRollNo();
+
+    if (isValidRoll) {
+      console.log("Roll number is valid:", formData.rollNo);
+      securityQuestion = "What is your pet name";
+      // Proceed with form submission
+    } else {
+      console.error("Invalid roll number");
+      // Display an error message or prevent form submission
+    }
+  };
 </script>
 
 {#if !securityQuestion}
@@ -16,15 +37,20 @@
       <div>
         <h3>ERP Roll Number :</h3>
         <input
+          type="text"
+          id="rollNo"
           bind:value={formData.rollNo}
           placeholder="Enter Your ERP Roll Number"
         />
       </div>
       <button
         on:click={() => {
-          securityQuestion = "What is your pet name";
+          handleSubmit();
         }}>Get Security Question</button
       >
+      {#if !isValidRoll}
+        <p style="color: red;">Invalid input. Please enter valid text.</p>
+      {/if}
     </div>
     <Footer />
   </div>
