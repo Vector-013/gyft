@@ -17,6 +17,7 @@ def enter_roll_number():
     if roll_number in user_data:
         # Return the security question associated with the roll number
         security_question = user_data[roll_number]['security_question']
+        print("jbhvbhuvhjbhjbjh")
         return jsonify(security_question=security_question), 200
     else:
         return jsonify(message='Invalid roll number'), 401

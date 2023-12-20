@@ -1,5 +1,4 @@
-from flask_sslify import SSLify
-from flask_jwt_extended import JWTManager
 
-sslify = SSLify()
-jwt = JWTManager()
+
+# Create a function to initialize SSLify within the context of the app
+# def init_sslify(app):

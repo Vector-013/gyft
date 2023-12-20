@@ -39,13 +39,16 @@
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/send-data", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data: inputData }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/auth/enter_roll_number",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ data: inputData }),
+        }
+      );
 
       if (response.ok) {
         console.log("Data sent successfully");

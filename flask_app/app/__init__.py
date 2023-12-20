@@ -1,15 +1,28 @@
+# app/__init__.py
 from flask import Flask
-from .extensions import sslify, jwt
+from .routes import init_app
 
-app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = 'your_secret_key'
+# Create a function to create the Flask app
+def create_app():
+    app = Flask(__name__)
+    
+    app.config['JWT_SECRET_KEY'] = 'oioi iuio yupp yuph'
 
-# Import and initialize extensions
-from .extensions import sslify, jwt
-sslify.init_app(app)
-jwt.init_app(app)
+    # Import and initialize extensions within the context of the app
 
-# Import and register routes
-from .routes import authentication, api
-app.register_blueprint(authentication.bp)
-app.register_blueprint(api.bp)
+    with app.app_context():
+        from flask_sslify import SSLify
+        from flask_jwt_extended import JWTManager
+
+        sslify = SSLify()
+        jwt = JWTManager()
+        sslify.init_app(app)
+        # init_sslify(app)
+        jwt.init_app(app)
+    
+    app.app_context().push()
+    # Call the init_app function to register route blueprints
+    init_app(app)
+
+    return app
+
