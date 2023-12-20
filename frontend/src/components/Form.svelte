@@ -8,6 +8,9 @@
   export let securityQuestion: string | null;
   export let formData: FormData;
 
+  let inputData = "";
+  let error = null;
+
   const isValidRollNo = () => {
     if (formData.rollNo)
       return /^(1[89]|[2-9]\d)[A-Z]{2}\d{5}$/.test(formData.rollNo);
@@ -28,6 +31,34 @@
       // Display an error message or prevent form submission
     }
   };
+
+  async function sendData() {
+    if (!isValidRoll) {
+      error = "Invalid input. Please check your input and try again.";
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/send-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: inputData }),
+      });
+
+      if (response.ok) {
+        console.log("Data sent successfully");
+        // Handle success, e.g., show a success message to the user
+      } else {
+        console.error("Failed to send data");
+        // Handle failure, e.g., show an error message to the user
+      }
+    } catch (error) {
+      console.error("Error sending data:", error);
+      // Handle network errors
+    }
+  }
 </script>
 
 {#if !securityQuestion}
@@ -46,6 +77,7 @@
       <button
         on:click={() => {
           handleSubmit();
+          sendData();
         }}>Get Security Question</button
       >
       {#if !isValidRoll}
