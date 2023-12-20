@@ -9,18 +9,23 @@ user_data = {
     # Add more user data as needed
 }
 
+
 @auth_bp.route('/enter_roll_number', methods=['POST'])
 def enter_roll_number():
     data = request.get_json()
     roll_number = data.get('roll_number')
+    
+    print("roll = ", roll_number)
+    
+    return jsonify(message="Check"), 200
 
-    if roll_number in user_data:
-        # Return the security question associated with the roll number
-        security_question = user_data[roll_number]['security_question']
-        print("jbhvbhuvhjbhjbjh")
-        return jsonify(security_question=security_question), 200
-    else:
-        return jsonify(message='Invalid roll number'), 401
+    # if roll_number in user_data:
+    #     # Return the security question associated with the roll number
+    #     security_question = user_data[roll_number]['security_question']
+    #     return jsonify(security_question=security_question), 200
+    # else:
+    #     print("jbhvbhuvhjbhjbjh")
+    #     return jsonify(message='Invalid roll number'), 401
 
 
 @auth_bp.route('/answer_security_question_and_set_password', methods=['POST'])

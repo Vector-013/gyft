@@ -39,6 +39,7 @@
     }
 
     try {
+      console.log(formData.rollNo);
       const response = await fetch(
         "http://localhost:5000/auth/enter_roll_number",
         {
@@ -46,7 +47,7 @@
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ data: inputData }),
+          body: JSON.stringify({ roll_number: formData.rollNo }),
         }
       );
 
